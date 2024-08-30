@@ -1,0 +1,91 @@
+@baseUrl = http://localhost:80/api/v1
+# {"admin":"1|4yhFS8wAeLEoDee5ZKfQbimJhP9eYOKvXbU5dZQEdc056008",
+#"update":"2|072ubL2ASkAA6RYcKC9YS5JKVM50IfyLhDiAO1T01c1431a9",
+#"basic":"3|ji33eHUw8xJLRwI4EEpLYlaRMAREsA3tdhRQy05847e56090"}
+@authTokenBasic = ji33eHUw8xJLRwI4EEpLYlaRMAREsA3tdhRQy05847e56090
+@authTokenAdmin = 4yhFS8wAeLEoDee5ZKfQbimJhP9eYOKvXbU5dZQEdc056008
+@authTokenUpdate = 072ubL2ASkAA6RYcKC9YS5JKVM50IfyLhDiAO1T01c1431a9
+###
+GET {{baseUrl}}/customers
+Content-Type: application/json,
+Accept: application/json,
+Authorization: Bearer {{authTokenBasic}}
+###
+
+POST {{baseUrl}}/customers HTTP/1.1
+Content-Type: application/json,
+Accept: application/json,
+Authorization: Bearer {{authTokenAdmin}}
+
+{
+    "name": "John Doe",
+    "type": "i",
+    "email": "tester@email.com",
+    "address": "1234 whereever",
+    "city": "Some City",
+    "state": "ST",
+    "postalCode": "12345"
+}
+
+
+### 
+GET {{baseUrl}}/customers/231
+
+
+###
+PUT {{baseUrl}}/customers/231 HTTP/1.1
+Content-Type: application/json,
+Accept: application/json,
+
+{
+    "name": "John Doe 222",
+    "type": "b",
+    "email": "tester@email.com",
+    "address": "1234 whereever",
+    "city": "Some City",
+    "state": "ST",
+    "postalCode": "12345"
+}
+
+
+###
+PATCH {{baseUrl}}/customers/231 HTTP/1.1
+Content-Type: application/json,
+Accept: application/json,
+
+{
+    
+    "type": "I",
+    "state": "bossku"
+
+}
+
+
+###
+
+POST {{baseUrl}}/invoices/bulk HTTP/1.1
+Content-Type: application/json,
+Accept: application/json,
+
+[
+    {
+        "customerId": 231,
+        "status":"B",
+        "amount": 100.00,
+        "billedDate": "2021-01-01 14:29:49",
+        "paidDate": "2021-01-02 14:29:49"
+
+    },
+    {
+        "customerId": 231,
+        "amount": 200.00,
+        "billedDate": "2021-01-01 14:29:49",
+        "status":"B",
+        "paidDate": "2021-01-03 14:29:49"
+    }
+]
+
+###
+GET {{baseUrl}}/invoices?customerId[eq]=231
+
+
